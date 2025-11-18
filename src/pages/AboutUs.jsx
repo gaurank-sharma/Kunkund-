@@ -1,0 +1,148 @@
+import React, { useEffect } from 'react';
+import BrandsSection from '../components/BrandsSection';
+
+// Import local images
+import m from '../assets/Team/m.jpg';
+import s from '../assets/Team/s.jpg';
+import su from '../assets/Team/su.jpg';
+
+const AboutUs = () => {
+  // Scroll to top when AboutUs mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* Hero Section */}
+      <div className="text-center mb-16">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          About Kund Kund Stationers
+        </h1>
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          Your Trusted Partner in Quality Stationery Since 1985
+        </p>
+      </div>
+
+      {/* Image + Text Section */}
+      <div className="flex flex-col lg:flex-row gap-12 items-center mb-16">
+        <div className="lg:w-1/2">
+          <img 
+            src="https://www.kundkundstationers.com/images/about-store.jpg" 
+            alt="Kund Kund Stationers Store"
+            className="rounded-lg shadow-xl w-full h-auto object-cover"
+          />
+        </div>
+        <div className="lg:w-1/2">
+          <h2 className="text-3xl font-bold text-gray-800 mb-6">Our Story</h2>
+          <p className="text-gray-600 mb-4">
+            Kundkund Stationers is a leading wholesale stationery supplier based in Gautampuri, Delhi, serving the growing demand for quality, affordable stationery across the region. We focus on delivering a wide range of stationery products that meet the needs of schools, offices, retailers, and institutional buyers.
+            <br /><br />
+            Our store offers a carefully curated selection of products – including notebooks, writing instruments, art supplies, office materials, and branded essentials – all available at competitive wholesale rates. Whether it's popular items like Writeflow notebooks or a variety of essential day-to-day stationery, we ensure stock that reflects both quality and value.
+            <br /><br />
+            What sets Kundkund Stationers apart is our commitment to bulk supply efficiency, reliable sourcing, and customer satisfaction. By maintaining strong ties with reputed manufacturers and distributors, we consistently provide our clients with updated product lines and favorable margins.
+            <br /><br />
+            We welcome retailers, resellers, and procurement professionals to visit our store and explore an extensive range of products designed to suit various business needs. As a fast-growing name in Delhi’s wholesale stationery market, we continue to expand our offerings while staying rooted in service, trust, and transparency.
+          </p>
+          <p className="text-gray-600">
+            Our journey began with a simple mission: <span className="font-semibold italic">to make quality stationery accessible to everyone</span>. Today, we serve businesses, educational institutions, and individual customers with a vast selection of products.
+          </p>
+        </div>
+      </div>
+
+      {/* Meet Our Owners Section */}
+      <div className="mb-16 text-center">
+        <h2 className="text-4xl font-bold text-red-600 mb-12">Meet Our Owners</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Owner 1 - Manoj */}
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <img 
+              src={m} 
+              alt="Manoj Kr. Jain" 
+              className="w-full h-80 object-cover rounded-lg mb-6"
+            />
+            <h3 className="text-xl font-bold text-red-700">Manoj Kr. Jain</h3>
+            <p className="text-gray-600">Founder & CEO</p>
+          </div>
+          {/* Owner 2 - Shubham */}
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <img 
+              src={su} 
+              alt="Shubham Jain" 
+              className="w-full h-80 object-cover rounded-lg mb-6"
+            />
+            <h3 className="text-xl font-bold text-red-700">Shubham Jain</h3>
+            <p className="text-gray-600">Finance & Purchase Manager</p>
+          </div>
+          {/* Owner 3 - Sahaj */}
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <img 
+              src={s} 
+              alt="Sahaj Jain" 
+              className="w-full h-80 object-cover rounded-lg mb-6"
+            />
+            <h3 className="text-xl font-bold text-red-700">Sahaj Jain</h3>
+            <p className="text-gray-600">Marketing Manager</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Why Choose Us Section */}
+      <div className="bg-blue-50 rounded-xl p-8 mb-16">
+        <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">Why Choose Us?</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            "Legacy of Trust – Over 38 years of experience",
+            "Wide Product Range – School to corporate supplies",
+            "Quality Assurance – Only the best brands",
+            "Customer-Centric Approach – Personalized service",
+            "Fast & Reliable Delivery – Across Mumbai"
+          ].map((item, index) => (
+            <div key={index} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-start">
+                {/* ✅ Blue Circle with White Tick */}
+                <div className="bg-blue-600 p-2 rounded-full mr-4 flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <p className="text-gray-700">{item}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Vision Section */}
+      <div className="mb-16 text-center">
+        <h2 className="text-3xl font-bold text-gray-800 mb-6">Our Vision</h2>
+        <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+          We aim to be the <span className="font-semibold">go-to destination for all stationery needs</span>, combining traditional values with modern convenience. Whether you're a student, a professional, or a business, we provide the tools you need to <span className="font-semibold">write your success story</span>.
+        </p>
+      </div>
+
+      {/* Contact Section */}
+      <div className="bg-gray-50 rounded-xl p-8">
+        <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">Visit Us</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+          {[
+            {icon: "📍", title: "Address", content: "KundKund Stationers  T/83, Gali No-7, Gautampuri , New Delhi, PIN - 110053"},
+            {icon: "📞", title: "Phone", content: "+91 9650668139,+91 9818818668"},
+            {icon: "📧", title: "Email", content: "Stationerskundkund@gmail.com"},
+            {icon: "🌐", title: "Website", content: "www.kundkundstationers.com"}
+          ].map((item, index) => (
+            <div key={index} className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="text-3xl mb-3">{item.icon}</div>
+              <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+              <p className="text-gray-600">{item.content}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <BrandsSection />
+    </div>
+  );
+};
+
+export default AboutUs;

@@ -1,0 +1,135 @@
+/* book.css */
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600&display=swap");
+
+#book-app {
+  box-sizing: border-box;
+  font-family: "Bricolage Grotesque", sans-serif;
+  background: #0e1a26;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+#book-app * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+}
+
+#book-app .container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#book-app .pokemon-logo {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+#book-app .page {
+  background: linear-gradient(145deg, #faf9f9 0%, #d7d6d6 100%);
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#book-app .page-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#book-app .cover {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  font-weight: bold;
+}
+
+#book-app .pokemon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 0 5px;
+}
+
+#book-app .pokemon-container img {
+  width: 70%;
+  max-height: 200px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+#book-app .pokemon-container img:hover {
+  transform: scale(1.05);
+}
+
+#book-app .pokemon-info {
+  width: 100%;
+}
+
+#book-app .pokemon-name {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 1000;
+  color: #d40505;
+  margin-bottom: 5px;
+}
+
+#book-app .pokemon-number {
+  font-size: clamp(0.7rem, 2vw, 1rem);
+  color: #7f8c8d;
+  margin-bottom: 10px;
+}
+
+#book-app .pokemon-type {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: clamp(0.6rem, 1.5vw, 0.9rem);
+  font-weight: 500;
+  color: white;
+  margin: 0 3px 5px 3px;
+}
+
+#book-app .type-electric { background-color: #f1c40f; }
+#book-app .type-ground { background-color: #e67e22; }
+#book-app .type-poison { background-color: #9b59b6; }
+#book-app .type-fire { background-color: #e74c3c; }
+#book-app .type-flying { background-color: #3498db; }
+#book-app .type-water { background-color: #2980b9; }
+#book-app .type-dark { background-color: #34495e; }
+#book-app .type-fighting { background-color: #d35400; }
+#book-app .type-steel { background-color: #7f8c8d; }
+#book-app .type-rock { background-color: #9a7b4f; }
+
+#book-app .pokemon-description {
+  font-size: 14px;
+  color: #34495e;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+#book-app .demoPage {
+  background: #fff;
+  color: #000;
+}
+
+#main-site {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
