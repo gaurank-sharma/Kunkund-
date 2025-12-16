@@ -7,9 +7,9 @@ import Categories from "./Categories";
 
 export default function Home() {
     return (
-    <main className="container mx-auto p-4 md:p-8 mt-4">
+    <main className="container mx-auto p-2 md:p-2">
       <HeroSection />
-      <h1 className="text-4xl font-extrabold text-center text-blue-700 mb-6">Welcome to Kundkund Stationers</h1>
+      <h1 className="text-4xl font-extrabold text-center text-blue-700 mb-6 mt-4">Welcome to Kundkund Stationers</h1>
       <p className="text-center text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
         Explore our wide range of high-quality stationery and art supplies. We are committed to providing the best products for all your creative and professional needs.
       </p>

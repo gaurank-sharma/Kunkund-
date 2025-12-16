@@ -463,7 +463,7 @@ function Header() {
   const searchRef = useRef(null);
 
   const navigate = useNavigate();
-  const brandNames = ["doms", "miles", "munix", "kores", "cello", "natraj", "saino", "pierre"];
+  const brandNames = ["doms", "kores","pedilite", "montex", "flair", "munix", "cello", "natraj", "saino", "pierre"];
 
   // Close dropdowns when clicking outside
   useEffect(() => {
