@@ -401,30 +401,11 @@ function Header() {
         
         {/* LOGO SECTION */}
         <div className="flex-shrink-0">
-          <Link to="/" className="flex items-center gap-3 text-white hover:opacity-90 transition-opacity">
-            {/* 1. The Icon */}
-            <div className="h-12 w-12 flex items-center justify-center">
-               <KundKundLogoIcon className="h-full w-full" />
-            </div>
-
-            {/* 2. The Text Stack */}
-            <div className="flex flex-col">
-              <span className="text-2xl font-serif font-bold tracking-widest leading-none">
-                KUNDKUND
-              </span>
-              <div className="flex items-center justify-between w-full mt-1">
-                 <span className="h-[1px] w-4 bg-white opacity-50"></span>
-                 <span className="text-[10px] font-sans tracking-[0.2em] uppercase leading-none px-1">
-                   Stationers
-                 </span>
-                 <span className="h-[1px] w-4 bg-white opacity-50"></span>
-              </div>
-               <span className="text-[8px] font-sans text-blue-200 tracking-wider text-center mt-0.5">
-                 RELIABLE SINCE 2017
-               </span>
-            </div>
+            <Link to="/" className="flex items-center text-white hover:opacity-90 transition-opacity">
+             {/* h-14 controls the Slim height. The SVG scales to fill this height. */}
+             <KundKundLogo className="h-14 w-auto" />
           </Link>
-        </div>
+         </div>
 
         {/* SEARCH BAR */}
         <div className="flex-1 max-w-lg relative hidden md:block" ref={searchRef}>
