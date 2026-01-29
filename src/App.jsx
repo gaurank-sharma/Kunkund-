@@ -9,6 +9,7 @@ import BrandsPage from './pages/BrandsPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import ProductsPage from './pages/ProductsPage';
 import CartPage from './pages/CartPage';
+import { CartProvider } from './context/CartContext';
 
 import LoadingAnimation from './components/LoadingAnimation';
 
@@ -25,6 +26,7 @@ export default function App() {
   }, []);
 
   return (
+    <CartProvider>
     <Router>
       <div className="font-sans antialiased text-gray-800 bg-gray-50 min-h-screen flex flex-col">
         {isLoading && <LoadingAnimation />}
@@ -50,5 +52,6 @@ export default function App() {
         <Footer />
       </div>
     </Router>
+    </CartProvider>
   );
 }
