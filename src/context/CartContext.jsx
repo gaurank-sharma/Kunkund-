@@ -7,7 +7,11 @@ export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(() => {
-    return JSON.parse(localStorage.getItem("cartItems")) || [];
+    try {
+      return JSON.parse(localStorage.getItem("cartItems")) || [];
+    } catch (e) {
+      return [];
+    }
   });
 
   // Save to localStorage whenever cart changes
@@ -15,10 +19,17 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (brandName, imageIndex, imageSrc) => {
+  // Unified addToCart function
+  const addToCart = (brandName, imageIndex, imageSrc, productName = null) => {
+    // Generate a unique ID. If productName exists, use it, otherwise use index.
+    const itemId = productName 
+      ? `${brandName}-${productName.replace(/\s+/g, '-')}` 
+      : `${brandName}-${imageIndex}`;
+
     const newItem = {
-      id: `${brandName}-${imageIndex}`,
+      id: itemId,
       brand: brandName,
+      name: productName || `${brandName} Product ${imageIndex + 1}`,
       imageIndex,
       imageSrc,
       quantity: 1,
