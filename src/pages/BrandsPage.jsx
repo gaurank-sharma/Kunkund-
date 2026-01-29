@@ -512,6 +512,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import emailjs from "emailjs-com";
+import { useCart } from "../context/CartContext";
 
 // --- ASSET IMPORTS (EXISTING) ---
 // Keep your existing imports here...
@@ -1235,18 +1236,7 @@ function BrandsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
       {/* Cart Icon */}
-      <div className="fixed top-30 right-4 z-40">
-        <Link to="/cart" className="relative flex items-center justify-center bg-blue-600 p-3 rounded-full shadow-lg hover:bg-blue-700 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
-          {cartItems.length > 0 && (
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-              {cartItems.reduce((total, item) => total + item.quantity, 0)}
-            </span>
-          )}
-        </Link>
-      </div>
+    
 
       {/* Lightbox Modal */}
       {activeImage && (
