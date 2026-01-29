@@ -255,13 +255,48 @@
 // export default Header;
 
 
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext'; 
 
-// ✅ Import icons from lucide-react
-import { ShoppingCart, Menu, Search, BookOpen, ChevronDown } from 'lucide-react';
+// --- 1. NEW: Bold Cart Icon (Standard Shopping Cart) ---
+const CartIcon = ({ className }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    className={className}
+    viewBox="0 0 24 24" 
+    fill="currentColor" // Solid fill for better visibility
+  >
+    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12 .9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H4.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+  </svg>
+);
+
+// --- 2. CUSTOM LOGO (Recreated "Lotus Book" style) ---
+// This SVG mimics the open book/flower shape from your image
+const KundKundLogoIcon = ({ className }) => (
+  <svg 
+    viewBox="0 0 100 80" 
+    fill="currentColor" 
+    className={className} 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {/* Center Spine */}
+    <path d="M50 70 L50 30" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    
+    {/* Left Petals/Pages */}
+    <path d="M50 70 Q 30 65 15 35" fill="none" stroke="currentColor" strokeWidth="3" />
+    <path d="M50 70 Q 35 60 25 25" fill="none" stroke="currentColor" strokeWidth="3" />
+    <path d="M50 70 Q 40 55 38 15" fill="none" stroke="currentColor" strokeWidth="3" />
+    
+    {/* Right Petals/Pages */}
+    <path d="M50 70 Q 70 65 85 35" fill="none" stroke="currentColor" strokeWidth="3" />
+    <path d="M50 70 Q 65 60 75 25" fill="none" stroke="currentColor" strokeWidth="3" />
+    <path d="M50 70 Q 60 55 62 15" fill="none" stroke="currentColor" strokeWidth="3" />
+    
+    {/* Small decorative diamonds/dots at top if needed */}
+    <circle cx="50" cy="25" r="2" fill="currentColor" />
+  </svg>
+);
 
 function Header() {
   const { cartItems } = useCart();
@@ -338,23 +373,36 @@ function Header() {
   return (
     <header className="bg-blue-800 shadow-lg font-inter sticky top-0 z-50">
       {/* Top Bar */}
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div className="container mx-auto px-4 py-2 flex items-center justify-between gap-4">
         
-        {/* ✅ UPDATED LOGO SECTION (Using Lucide Icon + Text) */}
+        {/* LOGO SECTION */}
         <div className="flex-shrink-0">
           <Link to="/" className="flex items-center gap-3 text-white hover:opacity-90 transition-opacity">
-            {/* Logo Icon */}
-            <BookOpen className="w-10 h-10 text-yellow-400" strokeWidth={1.5} />
-            
-            {/* Logo Text */}
-            <div className="flex flex-col leading-tight">
-              <span className="text-2xl font-bold tracking-wider font-serif">KUNDKUND</span>
-              <span className="text-[10px] text-blue-200 tracking-[0.3em] font-sans">STATIONERS</span>
+            {/* 1. The Icon */}
+            <div className="h-12 w-12 flex items-center justify-center">
+               <KundKundLogoIcon className="h-full w-full" />
+            </div>
+
+            {/* 2. The Text Stack */}
+            <div className="flex flex-col">
+              <span className="text-2xl font-serif font-bold tracking-widest leading-none">
+                KUNDKUND
+              </span>
+              <div className="flex items-center justify-between w-full mt-1">
+                 <span className="h-[1px] w-4 bg-white opacity-50"></span>
+                 <span className="text-[10px] font-sans tracking-[0.2em] uppercase leading-none px-1">
+                   Stationers
+                 </span>
+                 <span className="h-[1px] w-4 bg-white opacity-50"></span>
+              </div>
+               <span className="text-[8px] font-sans text-blue-200 tracking-wider text-center mt-0.5">
+                 RELIABLE SINCE 2017
+               </span>
             </div>
           </Link>
         </div>
 
-        {/* SEARCH BAR - Compact & Slim */}
+        {/* SEARCH BAR */}
         <div className="flex-1 max-w-lg relative hidden md:block" ref={searchRef}>
           <form onSubmit={handleSearch} className="relative flex w-full">
             <div className="relative flex-grow">
@@ -367,7 +415,9 @@ function Header() {
                 className="w-full py-2 pl-4 pr-10 text-white placeholder-blue-200 border border-blue-500 rounded-full focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent transition-all duration-200 text-sm bg-blue-700 bg-opacity-40"
               />
               <button type="submit" className="absolute right-0 top-0 h-full px-3 text-white hover:text-blue-200">
-                <Search className="w-5 h-5" />
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
               </button>
             </div>
           </form>
@@ -382,26 +432,33 @@ function Header() {
           )}
         </div>
 
-        {/* --- GLOBAL CART ICON & MOBILE MENU TOGGLE --- */}
+        {/* --- ICONS AREA (Cart + Mobile Menu) --- */}
         <div className="flex items-center gap-5">
           
-          {/* ✅ UPDATED CART ICON (Using Lucide ShoppingCart) */}
+          {/* CART ICON */}
           <Link to="/cart" className="relative group text-white hover:text-yellow-400 transition-colors">
-            <div className="relative p-1">
-              <ShoppingCart className="w-7 h-7" strokeWidth={2} />
+            <div className="p-1">
+              {/* Using the new Solid Cart Icon */}
+              <CartIcon className="h-7 w-7" />
               
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-2 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border-2 border-blue-800 shadow-sm min-w-[20px] text-center">
+                <span className="absolute -top-1 -right-2 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border border-blue-800 shadow-sm min-w-[20px] text-center">
                   {cartCount}
                 </span>
               )}
             </div>
           </Link>
 
-          {/* Mobile Menu Toggle Button */}
-          <div className="md:hidden flex-shrink-0 flex items-center">
+          {/* Mobile Menu Toggle */}
+          <div className="md:hidden flex-shrink-0">
             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white p-1 rounded hover:bg-blue-700">
-              <Menu className="w-8 h-8" />
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 {isMobileMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
+                 ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"/>
+                 )}
+              </svg>
             </button>
           </div>
         </div>
@@ -415,7 +472,7 @@ function Header() {
             
             <li className="relative group" ref={brandsDropdownRef}>
               <button onClick={() => setIsBrandsDropdownOpen(!isBrandsDropdownOpen)} className="flex items-center hover:text-yellow-400 transition-colors focus:outline-none gap-1">
-                BRANDS <ChevronDown className={`w-3 h-3 transition-transform ${isBrandsDropdownOpen ? 'rotate-180' : ''}`} />
+                BRANDS <svg className={`w-3 h-3 transition-transform ${isBrandsDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
               </button>
               {isBrandsDropdownOpen && (
                 <div className="absolute top-full left-0 mt-1 w-48 bg-white text-gray-800 rounded shadow-lg z-50 border border-gray-200">
@@ -427,7 +484,7 @@ function Header() {
 
             <li className="relative" ref={productsDropdownRef}>
               <button onClick={() => setIsProductsDropdownOpen(!isProductsDropdownOpen)} className="flex items-center hover:text-yellow-400 transition-colors focus:outline-none gap-1">
-                PRODUCTS <ChevronDown className={`w-3 h-3 transition-transform ${isProductsDropdownOpen ? 'rotate-180' : ''}`} />
+                PRODUCTS <svg className={`w-3 h-3 transition-transform ${isProductsDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
               </button>
               {isProductsDropdownOpen && (
                 <div className="absolute top-full left-0 mt-1 w-48 bg-white text-gray-800 rounded shadow-lg z-50 border border-gray-200">
@@ -451,16 +508,13 @@ function Header() {
           <div className="fixed top-0 right-0 w-64 h-full bg-white shadow-xl p-5 overflow-y-auto" onClick={e => e.stopPropagation()}>
             <div className="flex justify-end mb-4">
               <button onClick={() => setIsMobileMenuOpen(false)} className="text-gray-500 hover:bg-gray-100 p-1 rounded-full">
-                <Menu className="w-6 h-6" />
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
               </button>
             </div>
             
             {/* Mobile Search */}
             <form onSubmit={handleSearch} className="mb-4">
-               <div className="relative">
-                 <input type="text" value={searchQuery} onChange={handleSearchChange} placeholder="Search..." className="w-full p-2 pr-8 border border-gray-300 rounded text-sm" />
-                 <Search className="absolute right-2 top-2.5 w-4 h-4 text-gray-400" />
-               </div>
+               <input type="text" value={searchQuery} onChange={handleSearchChange} placeholder="Search..." className="w-full p-2 border border-gray-300 rounded text-sm" />
                {suggestions.length > 0 && (
                  <div className="mt-1 border border-gray-200 rounded">
                    {suggestions.map((brand, i) => <button key={i} type="button" onClick={() => {handleSuggestionClick(brand); setIsMobileMenuOpen(false);}} className="block w-full text-left px-3 py-1 text-sm hover:bg-gray-100 capitalize">{brand}</button>)}
@@ -472,13 +526,13 @@ function Header() {
               <Link to="/" className="block font-medium" onClick={() => setIsMobileMenuOpen(false)}>HOME</Link>
               <div>
                 <button onClick={() => setIsMobileBrandsOpen(!isMobileBrandsOpen)} className="flex justify-between w-full font-medium items-center">
-                    BRANDS <ChevronDown className={`w-4 h-4 transition-transform ${isMobileBrandsOpen ? 'rotate-180' : ''}`} />
+                   BRANDS <svg className={`w-4 h-4 transition-transform ${isMobileBrandsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
                 {isMobileBrandsOpen && <div className="ml-4 mt-2 space-y-2 text-sm text-gray-600"><button onClick={() => handleBrandClick('all')} className="block w-full text-left font-bold">All Brands</button>{brandNames.map(b => <button key={b} onClick={() => handleBrandClick(b)} className="block w-full text-left capitalize">{b}</button>)}</div>}
               </div>
               <div>
                 <button onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)} className="flex justify-between w-full font-medium items-center">
-                    PRODUCTS <ChevronDown className={`w-4 h-4 transition-transform ${isMobileProductsOpen ? 'rotate-180' : ''}`} />
+                   PRODUCTS <svg className={`w-4 h-4 transition-transform ${isMobileProductsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
                 {isMobileProductsOpen && <div className="ml-4 mt-2 space-y-2 text-sm text-gray-600"><Link to="/products#office" className="block" onClick={() => setIsMobileMenuOpen(false)}>Office</Link><Link to="/products#stationary" className="block" onClick={() => setIsMobileMenuOpen(false)}>Stationary</Link><Link to="/products#toys" className="block" onClick={() => setIsMobileMenuOpen(false)}>Toys</Link><Link to="/products#decoration" className="block" onClick={() => setIsMobileMenuOpen(false)}>Decoration</Link></div>}
               </div>
