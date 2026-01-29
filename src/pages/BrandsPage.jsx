@@ -1133,28 +1133,29 @@ function BrandsPage() {
   const navigate = useNavigate();
   const brandRefs = useRef({});
   const [activeImage, setActiveImage] = useState(null);
-  const [cartItems, setCartItems] = useState([]);
+  // const [cartItems, setCartItems] = useState([]);
   
   // --- Modal State ---
   const [modalOpen, setModalOpen] = useState(false);
   const [enquiryItem, setEnquiryItem] = useState("");
   const [notification, setNotification] = useState(null); 
+  const { addToCart: globalAddToCart } = useCart();
 
-  // Load cart items from localStorage
-  useEffect(() => {
-    try {
-      const savedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-      setCartItems(savedCartItems);
-    } catch (e) {
-      console.error("Failed to parse cart items:", e);
-      setCartItems([]);
-    }
-  }, []);
+  // // Load cart items from localStorage
+  // useEffect(() => {
+  //   try {
+  //     const savedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  //     setCartItems(savedCartItems);
+  //   } catch (e) {
+  //     console.error("Failed to parse cart items:", e);
+  //     setCartItems([]);
+  //   }
+  // }, []);
 
-  // Update localStorage
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [cartItems]);
+  // // Update localStorage
+  // useEffect(() => {
+  //   localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  // }, [cartItems]);
 
   // Scroll to brand
   useEffect(() => {
@@ -1199,37 +1200,50 @@ function BrandsPage() {
     setModalOpen(true);
   };
 
-  const addToCart = (brandName, uniqueId, product) => {
+  // const addToCart = (brandName, uniqueId, product) => {
+  //   if(product.img.includes("placehold.co") && product.name === "Coming Soon") return;
+
+  //   const priceMap = { "Doms": 12.99, "Kores": 9.99, "Munix": 14.99, "Miles": 11.99 };
+  //   const basePrice = priceMap[brandName] || 10.99;
+    
+  //   const newItem = {
+  //     id: `${brandName}-${uniqueId}-${Date.now()}`,
+  //     brand: brandName,
+  //     name: product.name,
+  //     imageSrc: product.img,
+  //     price: basePrice, // Logic for price can be improved if you add price to product object
+  //     quantity: 1,
+  //     timestamp: Date.now()
+  //   };
+    
+  //   setCartItems(prevCart => {
+  //     const existingItemIndex = prevCart.findIndex(
+  //       item => item.name === product.name
+  //     );
+      
+  //     let updatedCart;
+  //     if (existingItemIndex >= 0) {
+  //       updatedCart = [...prevCart];
+  //       updatedCart[existingItemIndex].quantity += 1;
+  //     } else {
+  //       updatedCart = [...prevCart, newItem];
+  //     }
+  //     return updatedCart;
+  //   });
+    
+  //   setNotification({ message: `Added ${product.name} to cart!`, isError: false });
+  // };
+
+
+    const addToCart = (brandName, uniqueId, product) => {
+    // 1. Validation: Ignore placeholder/coming soon items
     if(product.img.includes("placehold.co") && product.name === "Coming Soon") return;
 
-    const priceMap = { "Doms": 12.99, "Kores": 9.99, "Munix": 14.99, "Miles": 11.99 };
-    const basePrice = priceMap[brandName] || 10.99;
+    // 2. Call the Global Context function
+    // We pass '0' as the index because the Context generates a unique ID using the product name
+    globalAddToCart(brandName, 0, product.img, product.name);
     
-    const newItem = {
-      id: `${brandName}-${uniqueId}-${Date.now()}`,
-      brand: brandName,
-      name: product.name,
-      imageSrc: product.img,
-      price: basePrice, // Logic for price can be improved if you add price to product object
-      quantity: 1,
-      timestamp: Date.now()
-    };
-    
-    setCartItems(prevCart => {
-      const existingItemIndex = prevCart.findIndex(
-        item => item.name === product.name
-      );
-      
-      let updatedCart;
-      if (existingItemIndex >= 0) {
-        updatedCart = [...prevCart];
-        updatedCart[existingItemIndex].quantity += 1;
-      } else {
-        updatedCart = [...prevCart, newItem];
-      }
-      return updatedCart;
-    });
-    
+    // 3. Show Success Notification
     setNotification({ message: `Added ${product.name} to cart!`, isError: false });
   };
 
