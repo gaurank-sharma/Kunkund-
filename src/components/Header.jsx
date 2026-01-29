@@ -257,11 +257,18 @@
 
 
 
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext'; // ✅ 1. Import Global Cart Hook
 
-// --- THE CUSTOM LOGO COMPONENT ---
+// --- 2. Define Cart Icon (Inline SVG to ensure visibility) ---
+const CartIcon = ({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5H21m-2 8a2 2 0 01-2 2H7a2 2 0 110-4h14a2 2 0 012 2v2a2 2 0 01-2 2h-2m-3-12a2 2 0 100-4 2 2 0 000 4z" />
+  </svg>
+);
+
+// --- 3. Define Logo Component ---
 const KundKundLogo = ({ className }) => (
   <svg 
     viewBox="0 0 1000 225" 
@@ -297,6 +304,9 @@ const KundKundLogo = ({ className }) => (
 );
 
 function Header() {
+  const { cartItems } = useCart(); // ✅ 4. Get items from global cart
+  const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
   const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
   const [isBrandsDropdownOpen, setIsBrandsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -305,9 +315,6 @@ function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
-  
-  // NEW: State for Cart Count
-  const [cartCount, setCartCount] = useState(0);
 
   const productsDropdownRef = useRef(null);
   const brandsDropdownRef = useRef(null);
@@ -316,28 +323,6 @@ function Header() {
 
   const navigate = useNavigate();
   const brandNames = ["doms", "kores","pedilite", "montex", "flair", "munix", "cello", "natraj", "saino", "pierre"];
-
-  // 1. EFFECT TO UPDATE CART COUNT
-  useEffect(() => {
-    const updateCount = () => {
-      const items = JSON.parse(localStorage.getItem("cartItems")) || [];
-      const total = items.reduce((acc, item) => acc + (item.quantity || 1), 0);
-      setCartCount(total);
-    };
-
-    // Initial load
-    updateCount();
-
-    // Listen for custom event from ProductsPage
-    window.addEventListener('cartUpdated', updateCount);
-    // Listen for storage changes
-    window.addEventListener('storage', updateCount);
-
-    return () => {
-      window.removeEventListener('cartUpdated', updateCount);
-      window.removeEventListener('storage', updateCount);
-    };
-  }, []);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -430,37 +415,32 @@ function Header() {
           )}
         </div>
 
-        {/* 2. HEADER CART ICON (Always Visible) */}
+        {/* --- 5. GLOBAL CART ICON & MOBILE MENU TOGGLE --- */}
         <div className="flex items-center gap-4">
-            <Link to="/cart" className="relative group text-white hover:text-yellow-400 transition-colors">
+          
+          {/* Cart Link (Visible on Desktop & Mobile) */}
+          <Link to="/cart" className="relative group text-white hover:text-yellow-400 transition-colors">
             <div className="p-2">
-                {/* --- INLINE SVG FOR CART ICON START --- */}
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5H21m-2 8a2 2 0 01-2 2H7a2 2 0 110-4h14a2 2 0 012 2v2a2 2 0 01-2 2h-2m-3-12a2 2 0 100-4 2 2 0 000 4z" />
-                </svg>
-                {/* --- INLINE SVG FOR CART ICON END --- */}
-                
-                {cartCount > 0 && (
+              <CartIcon className="h-7 w-7" />
+              {cartCount > 0 && (
                 <span className="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border border-blue-800">
-                    {cartCount}
+                  {cartCount}
                 </span>
-                )}
+              )}
             </div>
             <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                View Cart
+              View Cart
             </span>
-            </Link>
+          </Link>
 
-            {/* Mobile Toggle Button */}
-            <div className="md:hidden flex-shrink-0 flex items-center gap-2">
+          {/* Mobile Menu Toggle Button */}
+          <div className="md:hidden flex-shrink-0 flex items-center gap-2">
             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white p-1 rounded hover:bg-blue-700">
-                {/* --- INLINE SVG FOR MOBILE MENU START --- */}
-                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {isMobileMenuOpen ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/> : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"/>}
-                </svg>
-                {/* --- INLINE SVG FOR MOBILE MENU END --- */}
+              </svg>
             </button>
-            </div>
+          </div>
         </div>
       </div>
 
