@@ -403,7 +403,7 @@ function Header() {
         <div className="flex-shrink-0">
             <Link to="/" className="flex items-center text-white hover:opacity-90 transition-opacity">
              {/* h-14 controls the Slim height. The SVG scales to fill this height. */}
-             <KundKundLogo className="h-14 w-auto" />
+             <KundKundLogoIcon className="h-14 w-auto" />
           </Link>
          </div>
 
