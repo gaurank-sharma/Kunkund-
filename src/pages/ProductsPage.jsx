@@ -616,6 +616,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import emailjs from "emailjs-com";
+import { useCart } from "../context/CartContext"; // ✅ 1. Import Global Context
 
 // EmailJS Configuration
 const serviceID = "service_g4md2ye";
@@ -699,13 +700,13 @@ function ProductsPage() {
   const [hasScrolled, setHasScrolled] = useState(false);
   
   // Cart States
-  const [cartItems, setCartItems] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [checkoutForm, setCheckoutForm] = useState({
-    name: "",
-    phone: "",
-    address: ""
-  });
+  // const [cartItems, setCartItems] = useState([]);
+  // const [isCartOpen, setIsCartOpen] = useState(false);
+  // const [checkoutForm, setCheckoutForm] = useState({
+  //   name: "",
+  //   phone: "",
+  //   address: ""
+  // });
   
   // Enquiry Form State
   const [enquiryForm, setEnquiryForm] = useState({
@@ -722,10 +723,10 @@ function ProductsPage() {
   });
 
   // Load initial cart
-  useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("cartItems")) || [];
-    setCartItems(items);
-  }, []);
+  // useEffect(() => {
+  //   const items = JSON.parse(localStorage.getItem("cartItems")) || [];
+  //   setCartItems(items);
+  // }, []);
 
   // Scrolling Logic
   useEffect(() => {
@@ -834,61 +835,22 @@ function ProductsPage() {
   };
 
   // Cart & WhatsApp Logic
-  const addToCart = (categoryName, imageIndex, imageSrc) => {
-    const newItem = {
-      id: `${categoryName}-${imageIndex}-${Date.now()}`,
-      category: categoryName,
-      imageIndex,
-      imageSrc,
-      quantity: 1,
-      timestamp: Date.now()
-    };
+ const addToCart = (categoryName, imageIndex, imageSrc) => {
+    // Generate a name since these products don't have explicit names in your data
+    const productName = `${categoryName} Product ${imageIndex + 1}`;
     
-    const existingCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const existingItemIndex = existingCartItems.findIndex(
-      item => item.category === categoryName && item.imageIndex === imageIndex
-    );
+    // Call Global Context
+    globalAddToCart(categoryName, imageIndex, imageSrc, productName);
     
-    let updatedCartItems;
-    if (existingItemIndex >= 0) {
-      updatedCartItems = [...existingCartItems];
-      updatedCartItems[existingItemIndex].quantity += 1;
-    } else {
-      updatedCartItems = [...existingCartItems, newItem];
-    }
-    
-    localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
-    setCartItems(updatedCartItems);
-    setIsCartOpen(true);
-    
+    // Notification (Create a temporary div)
     const notification = document.createElement("div");
     notification.className = "fixed top-20 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-[100]";
     notification.textContent = "Added to cart!";
     document.body.appendChild(notification);
     setTimeout(() => document.body.removeChild(notification), 2000);
   };
-
-  const removeFromCart = (itemId) => {
-    const updatedCart = cartItems.filter(item => item.id !== itemId);
-    setCartItems(updatedCart);
-    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
-  };
-
-  const handleCheckoutInput = (e) => {
-    const { name, value } = e.target;
-    setCheckoutForm(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleWhatsAppCheckout = () => {
-    if (cartItems.length === 0) {
-      alert("Your cart is empty!");
-      return;
-    }
-    if (!checkoutForm.name || !checkoutForm.phone) {
-      alert("Please enter your Name and Phone number to proceed.");
-      return;
-    }
-
+    
+ 
     // 1. Build the Message
     let message = `*📦 New Order Request*\n\n`;
     
@@ -926,7 +888,7 @@ function ProductsPage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 relative">
       
       {/* ✅ CART FLOATING BUTTON */}
-      <button 
+      {/* <button 
         onClick={() => setIsCartOpen(true)}
         className="fixed bottom-8 right-8 z-[100] bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 border-2 border-white flex items-center justify-center"
       >
@@ -938,7 +900,7 @@ function ProductsPage() {
             {cartItems.length}
           </span>
         )}
-      </button>
+      </button> */}
 
       {/* ✅ CART SIDEBAR */}
       {isCartOpen && (
