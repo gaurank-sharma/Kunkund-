@@ -61,7 +61,7 @@ function CartPage() {
     const message = `NEW ORDER INQUIRY%0A%0A%0A*CUSTOMER DETAILS:*%0A%0AName: ${formData.name}%0AEmail: ${formData.email}%0APhone: ${formData.phone}%0A%0A%0A*ORDER DETAILS:*%0A%0A${orderDetails}%0A%0ATotal Items: ${totalItems}%0A%0A%0AThank you for your order! Please contact us for pricing details.`;
     
     // WhatsApp business number (replace with your actual number)
-    const whatsappNumber = "1234567890";
+    const whatsappNumber = "CartPage.js";
     
     // Open WhatsApp with pre-filled message
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
