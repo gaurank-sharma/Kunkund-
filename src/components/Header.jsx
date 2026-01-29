@@ -263,8 +263,14 @@ import { useCart } from '../context/CartContext'; // ✅ 1. Import Global Cart H
 
 // --- 2. Define Cart Icon (Inline SVG to ensure visibility) ---
 const CartIcon = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5H21m-2 8a2 2 0 01-2 2H7a2 2 0 110-4h14a2 2 0 012 2v2a2 2 0 01-2 2h-2m-3-12a2 2 0 100-4 2 2 0 000 4z" />
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    className={className} 
+    viewBox="0 0 24 24" 
+    fill="currentColor" // Changed to fill for a bolder look
+  >
+    <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
+    <path d="M16.5 6a4.5 4.5 0 10-9 0v1h9V6zM3 9.75A2.25 2.25 0 015.25 7.5h13.5A2.25 2.25 0 0121 9.75v10.5a2.25 2.25 0 01-2.25 2.25H5.25a2.25 2.25 0 01-2.25-2.25V9.75z" />
   </svg>
 );
 
