@@ -303,12 +303,11 @@
 
 
 
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext'; 
 
-// --- 1. NEW: Bold Cart Icon (Standard Shopping Cart) ---
+// --- 1. Bold Cart Icon ---
 const CartIcon = ({ className }) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
@@ -334,7 +333,6 @@ const KundKundLogoIcon = ({ className }) => (
       <path d="M485 1613 c16 -44 17 -74 1 -98 -21 -32 -16 -41 31 -47 59 -8 184 -64 270 -121 108 -72 268 -232 338 -340 31 -49 59 -86 62 -83 7 7 -87 169 -134 232 -73 98 -176 204 -257 265 -85 65 -301 209 -312 209 -3 0 -3 -8 1 -17z m71 -68 c4 -8 10 -13 14 -10 5 3 11 -4 15 -15 3 -11 11 -20 16 -20 6 0 7 6 3 13 -9 13 26 -12 38 -28 8 -11 -12 -26 -25 -18 -5 3 -4 9 2 13 7 4 -5 6 -26 5 -44 -1 -63 13 -63 49 0 28 17 35 26 11z"/>
       <path d="M1945 1552 c-120 -80 -224 -160 -283 -216 -110 -104 -243 -283 -275 -368 -11 -30 2 -20 30 25 108 168 285 329 458 415 73 37 101 47 188 66 27 6 27 7 11 31 -12 18 -15 39 -12 70 4 30 2 45 -6 44 -6 0 -56 -30 -111 -67z m82 -35 c1 -17 -1 -26 -4 -18 -4 9 -7 10 -13 2 -3 -7 -24 -15 -46 -18 -21 -4 -45 -12 -52 -20 -7 -7 -19 -13 -25 -12 -8 0 -8 2 1 6 6 2 10 9 6 14 -3 5 0 9 6 9 6 0 9 4 6 9 -3 5 6 12 20 15 14 4 37 17 51 31 32 29 48 24 50 -18z"/>
       <path d="M300 1410 c-13 -8 -12 -11 5 -24 11 -9 23 -16 28 -16 4 0 16 -9 27 -20 14 -14 18 -27 14 -50 l-6 -30 65 0 c275 0 553 -172 748 -462 74 -110 73 -138 -1 -37 -85 116 -140 176 -212 235 -186 150 -442 226 -662 196 -47 -6 -96 -16 -108 -23 l-22 -12 28 -22 c19 -15 28 -33 31 -59 2 -21 6 -40 9 -43 3 -3 27 3 53 13 72 29 270 27 376 -4 201 -58 410 -203 560 -390 41 -51 34 -76 -7 -27 -233 276 -498 399 -821 383 -98 -5 -182 -29 -198 -55 -4 -6 47 -12 131 -16 341 -15 630 -118 848 -303 35 -30 70 -54 78 -54 9 0 25 19 37 42 28 56 198 222 285 280 82 54 223 119 314 144 92 26 287 26 352 1 26 -10 52 -16 58 -12 5 3 10 21 10 40 0 24 7 39 25 53 14 11 25 25 25 30 0 32 -210 52 -339 33 -251 -37 -475 -180 -646 -412 -57 -78 -55 -76 -55 -58 0 8 19 44 43 80 131 204 346 372 547 429 41 12 119 24 173 27 96 6 98 7 93 29 -9 33 1 49 46 79 53 35 39 45 -66 45 -286 0 -621 -233 -810 -564 -24 -43 -50 -100 -56 -127 -7 -27 -15 -49 -19 -49 -3 0 -17 30 -30 66 -51 141 -232 373 -384 491 -76 59 -204 125 -302 157 -60 20 -100 26 -165 26 -47 0 -92 -5 -100 -10z m194 -31 c15 -5 32 -6 36 -4 5 3 11 1 15 -5 3 -5 12 -10 20 -10 28 0 135 -54 122 -62 -8 -5 -7 -8 6 -9 27 -2 30 -3 70 -22 20 -10 37 -24 37 -31 0 -8 8 -17 18 -21 14 -5 15 -4 5 6 -7 7 -13 17 -13 21 0 5 11 -2 25 -16 25 -25 33 -56 15 -56 -6 0 -9 6 -8 13 2 6 -6 12 -17 12 -11 0 -24 6 -28 13 -4 6 -15 12 -23 12 -9 0 -12 5 -8 12 5 7 3 8 -5 3 -7 -4 -23 -2 -34 4 -37 18 -82 34 -91 32 -4 -1 -33 5 -63 14 -30 9 -75 17 -101 18 -41 2 -49 6 -70 37 -15 23 -19 36 -11 39 8 2 8 6 -2 12 -16 10 65 1 105 -12z m1686 8 c0 -2 -9 -22 -20 -45 -17 -35 -25 -42 -48 -41 -15 1 -47 -1 -72 -6 -25 -4 -61 -9 -80 -10 -46 -3 -128 -34 -227 -87 -54 -28 -69 -25 -33 7 11 10 20 15 20 11 0 -4 10 3 23 16 26 27 61 48 79 48 9 0 8 -4 -2 -11 -13 -9 -13 -10 0 -6 8 2 14 10 12 17 -1 6 7 14 18 17 11 3 20 9 20 14 0 5 6 9 13 9 8 0 29 8 48 17 60 30 249 68 249 50z m-1220 -267 c5 0 14 -10 20 -22 10 -21 10 -22 -4 -5 -8 10 -17 18 -20 17 -13 -2 -85 63 -80 72 4 6 21 -6 40 -26 19 -20 38 -36 44 -36z m-459 48 c48 -2 85 -6 82 -10 -2 -5 6 -8 19 -8 13 0 30 -6 37 -12 9 -8 12 -9 7 -1 -4 7 1 9 14 6 11 -3 17 -10 13 -16 -3 -6 -1 -7 6 -3 6 4 17 3 24 -3 7 -5 25 -12 39 -15 15 -2 37 -14 49 -25 12 -11 26 -18 31 -15 4 3 8 1 8 -5 0 -6 7 -8 15 -5 10 4 15 0 15 -11 0 -11 5 -15 16 -11 8 3 12 2 9 -4 -3 -6 -1 -10 4 -10 6 0 19 -8 30 -19 18 -18 18 -18 -4 -18 -17 0 -22 4 -18 15 4 10 2 13 -5 8 -6 -3 -13 -2 -17 4 -3 5 -11 10 -16 10 -6 0 -7 -5 -3 -12 4 -7 3 -8 -5 -4 -6 4 -9 11 -6 15 2 5 -9 11 -25 15 -20 3 -30 12 -30 23 0 16 -2 16 -11 3 -8 -11 -12 -12 -16 -2 -2 6 -18 12 -34 12 -17 0 -28 4 -25 9 4 5 -3 7 -14 4 -11 -3 -26 -1 -33 5 -6 5 -48 13 -92 16 -142 11 -184 12 -172 3 7 -5 3 -7 -12 -3 -13 3 -37 -2 -52 -9 -15 -8 -34 -12 -43 -9 -15 6 -41 64 -28 64 4 0 0 5 -8 11 -11 8 -7 9 17 5 18 -3 35 -1 38 3 2 5 28 7 57 5 29 -2 92 -5 139 -6z m1172 -2 c4 -9 1 -13 -7 -10 -7 3 -29 -11 -49 -31 -20 -20 -37 -31 -37 -25 0 6 7 13 15 16 8 4 15 12 15 20 0 8 7 14 15 14 9 0 18 7 21 15 8 19 20 19 27 1z m568 2 l76 -3 -14 -22 c-9 -13 -13 -23 -9 -23 3 0 -2 -9 -11 -20 -11 -13 -19 -16 -24 -9 -4 7 -11 9 -16 6 -5 -3 -27 -2 -49 3 -68 14 -115 19 -110 12 2 -4 -29 -6 -70 -5 -41 1 -74 -2 -74 -6 0 -4 -17 -8 -37 -9 -20 -1 -40 -7 -43 -13 -4 -6 -26 -12 -48 -13 -23 -1 -45 -5 -49 -10 -4 -4 0 -4 10 0 9 3 17 3 17 0 0 -10 -53 -29 -75 -27 -17 2 -18 0 -5 -9 12 -10 11 -11 -7 -7 -13 3 -23 1 -23 -4 0 -5 -7 -9 -16 -9 -23 0 19 39 71 65 22 11 42 23 45 27 22 29 242 84 320 81 36 -1 99 -4 141 -5z m-1627 -194 c9 -3 16 -10 16 -15 0 -4 21 -5 46 -2 36 4 45 3 39 -7 -6 -10 -1 -11 21 -6 20 4 24 4 15 -3 -11 -7 -2 -11 32 -16 52 -8 60 -14 46 -35 -7 -13 -9 -12 -9 3 0 13 -9 17 -40 17 -22 0 -40 4 -40 9 0 4 -33 13 -72 20 -40 6 -86 16 -103 21 -16 5 -55 13 -85 19 -51 8 -48 9 32 5 47 -2 93 -7 102 -10z"/>
-      <path d="M1920 1005 c-180 -37 -348 -126 -494 -265 -70 -67 -145 -160 -129 -160 5 0 29 20 53 45 90 92 282 200 450 253 126 40 257 61 418 69 72 3 132 9 132 12 0 14 -58 40 -114 50 -78 14 -235 12 -316 -4z m190 -24 c0 -4 -30 -7 -67 -5 -53 2 -61 1 -38 -6 l30 -9 -32 3 c-18 1 -34 -1 -35 -6 -2 -5 -23 -11 -48 -14 -25 -2 -50 -6 -56 -8 -6 -2 -17 0 -25 5 -16 10 -5 12 44 9 15 -1 27 4 27 10 0 7 6 10 13 7 7 -3 24 1 38 9 26 15 149 19 149 5z m-290 -50 c0 -5 -14 -12 -30 -16 -19 -4 -28 -11 -24 -18 5 -8 2 -8 -7 1 -17 16 -29 15 -29 -1 0 -8 -6 -14 -12 -15 -7 0 -24 -3 -38 -6 -14 -4 -19 -3 -11 0 8 4 29 17 48 30 19 13 41 20 49 17 8 -3 14 0 14 6 0 6 9 11 20 11 11 0 20 -4 20 -9z"/>
     </g>
 
     <g transform="translate(280, 100)" fill="currentColor">
@@ -431,18 +429,17 @@ function Header() {
   return (
     <header className="bg-blue-800 shadow-lg font-inter sticky top-0 z-50">
       {/* Top Bar */}
-      {/* ✅ FIX 1: Reduced gap for mobile (gap-2) */}
-      <div className="container mx-auto px-4 py-2 flex items-center justify-between gap-2 md:gap-4">
+      {/* ✅ FIX 1: px-2 on mobile adds critical extra space */}
+      <div className="container mx-auto px-2 md:px-4 py-2 flex items-center justify-between gap-2 md:gap-4">
         
-        {/* LOGO SECTION */}
-        <div className="flex-shrink-0">
+        {/* LOGO SECTION - ✅ FIX 2: flex-shrink-1 + min-w-0 allow shrinking */}
+        <div className="flex-shrink-1 min-w-0">
             <Link to="/" className="flex items-center text-white hover:opacity-90 transition-opacity">
-             {/* ✅ FIX 2: Reduced logo height for mobile (h-10) */}
-             <KundKundLogoIcon className="h-10 md:h-14 w-auto" />
+             <KundKundLogoIcon className="h-8 md:h-14 w-auto max-w-full" />
           </Link>
          </div>
 
-        {/* SEARCH BAR */}
+        {/* SEARCH BAR (Hidden on Mobile) */}
         <div className="flex-1 max-w-lg relative hidden md:block" ref={searchRef}>
           <form onSubmit={handleSearch} className="relative flex w-full">
             <div className="relative flex-grow">
@@ -473,15 +470,13 @@ function Header() {
         </div>
 
         {/* --- ICONS AREA (Cart + Mobile Menu) --- */}
-        {/* ✅ FIX 3: Reduced gap for icons area on mobile (gap-3) */}
-        <div className="flex items-center gap-3 md:gap-5">
+        {/* ✅ FIX 3: flex-shrink-0 forces icons to stay visible and never cut off */}
+        <div className="flex items-center gap-3 md:gap-5 flex-shrink-0">
           
           {/* CART ICON */}
           <Link to="/cart" className="relative group text-white hover:text-yellow-400 transition-colors">
             <div className="p-1">
-              {/* Using the new Solid Cart Icon */}
               <CartIcon className="h-7 w-7" />
-              
               {cartCount > 0 && (
                 <span className="absolute -top-1 -right-2 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border border-blue-800 shadow-sm min-w-[20px] text-center">
                   {cartCount}
@@ -505,12 +500,11 @@ function Header() {
         </div>
       </div>
 
-      {/* Desktop Navigation - Slim Strip */}
+      {/* Desktop Navigation */}
       <div className="hidden md:block border-t border-blue-700 bg-blue-900">
         <nav className="container mx-auto">
           <ul className="flex justify-center space-x-8 text-sm font-medium text-white py-2">
             <li><Link to="/" className="hover:text-yellow-400 transition-colors">HOME</Link></li>
-            
             <li className="relative group" ref={brandsDropdownRef}>
               <button onClick={() => setIsBrandsDropdownOpen(!isBrandsDropdownOpen)} className="flex items-center hover:text-yellow-400 transition-colors focus:outline-none gap-1">
                 BRANDS <svg className={`w-3 h-3 transition-transform ${isBrandsDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
@@ -522,7 +516,6 @@ function Header() {
                 </div>
               )}
             </li>
-
             <li className="relative" ref={productsDropdownRef}>
               <button onClick={() => setIsProductsDropdownOpen(!isProductsDropdownOpen)} className="flex items-center hover:text-yellow-400 transition-colors focus:outline-none gap-1">
                 PRODUCTS <svg className={`w-3 h-3 transition-transform ${isProductsDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
@@ -536,7 +529,6 @@ function Header() {
                 </div>
               )}
             </li>
-
             <li><Link to="/AboutUs" className="hover:text-yellow-400 transition-colors">ABOUT US</Link></li>
             <li><Link to="/ContactUs" className="hover:text-yellow-400 transition-colors">CONTACT US</Link></li>
           </ul>
@@ -552,8 +544,6 @@ function Header() {
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
               </button>
             </div>
-            
-            {/* Mobile Search */}
             <form onSubmit={handleSearch} className="mb-4">
                <input type="text" value={searchQuery} onChange={handleSearchChange} placeholder="Search..." className="w-full p-2 border border-gray-300 rounded text-sm" />
                {suggestions.length > 0 && (
@@ -562,7 +552,6 @@ function Header() {
                  </div>
                )}
             </form>
-
             <nav className="space-y-4 text-gray-800">
               <Link to="/" className="block font-medium" onClick={() => setIsMobileMenuOpen(false)}>HOME</Link>
               <div>
@@ -587,4 +576,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default Header; 
