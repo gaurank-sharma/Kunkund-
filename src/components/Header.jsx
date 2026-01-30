@@ -1,13 +1,28 @@
 
 
 
+
+
 // import React, { useState, useEffect, useRef } from 'react';
 // import { Link, useNavigate } from 'react-router-dom';
+// import { useCart } from '../context/CartContext'; 
 
-// // --- THE CUSTOM LOGO COMPONENT ---
-// // This combines your provided SVG paths (Icon) with the Text in a horizontal layout
-// // to keep the header SLIM.
-// const KundKundLogo = ({ className }) => (
+// // --- 1. NEW: Bold Cart Icon (Standard Shopping Cart) ---
+// const CartIcon = ({ className }) => (
+//   <svg 
+//     xmlns="http://www.w3.org/2000/svg" 
+//     className={className}
+//     viewBox="0 0 24 24" 
+//     fill="currentColor" // Solid fill for better visibility
+//   >
+//     <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12 .9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H4.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+//   </svg>
+// );
+
+// // --- 2. CUSTOM LOGO (Recreated "Lotus Book" style) ---
+// // This SVG mimics the open book/flower shape from your image
+// const KundKundLogoIcon = ({ className }) => (
+
 //   <svg 
 //     viewBox="0 0 1000 225" // Wide viewbox to fit Icon + Text side-by-side
 //     fill="none" 
@@ -56,6 +71,9 @@
 // );
 
 // function Header() {
+//   const { cartItems } = useCart();
+//   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
 //   const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
 //   const [isBrandsDropdownOpen, setIsBrandsDropdownOpen] = useState(false);
 //   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -129,15 +147,15 @@
 //       {/* Top Bar */}
 //       <div className="container mx-auto px-4 py-2 flex items-center justify-between gap-4">
         
-//         {/* LOGO SECTION - Uses the exact paths you provided */}
+//         {/* LOGO SECTION */}
 //         <div className="flex-shrink-0">
-//           <Link to="/" className="flex items-center text-white hover:opacity-90 transition-opacity">
-//             {/* h-14 controls the Slim height. The SVG scales to fill this height. */}
-//             <KundKundLogo className="h-14 w-auto" />
+//             <Link to="/" className="flex items-center text-white hover:opacity-90 transition-opacity">
+//              {/* h-14 controls the Slim height. The SVG scales to fill this height. */}
+//              <KundKundLogoIcon className="h-14 w-auto" />
 //           </Link>
-//         </div>
+//          </div>
 
-//         {/* SEARCH BAR - Compact & Slim */}
+//         {/* SEARCH BAR */}
 //         <div className="flex-1 max-w-lg relative hidden md:block" ref={searchRef}>
 //           <form onSubmit={handleSearch} className="relative flex w-full">
 //             <div className="relative flex-grow">
@@ -147,10 +165,12 @@
 //                 onChange={handleSearchChange}
 //                 onFocus={() => searchQuery.length > 0 && setShowSuggestions(true)}
 //                 placeholder="Search..."
-//                 className="w-full py-1.5 pl-4 pr-10 text-white placeholder-blue-200 border border-blue-500 rounded-full focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent transition-all duration-200 text-sm bg-blue-700 bg-opacity-40"
+//                 className="w-full py-2 pl-4 pr-10 text-white placeholder-blue-200 border border-blue-500 rounded-full focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent transition-all duration-200 text-sm bg-blue-700 bg-opacity-40"
 //               />
 //               <button type="submit" className="absolute right-0 top-0 h-full px-3 text-white hover:text-blue-200">
-//                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+//                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+//                 </svg>
 //               </button>
 //             </div>
 //           </form>
@@ -165,26 +185,47 @@
 //           )}
 //         </div>
 
-//         {/* Mobile Toggle */}
-//         <div className="md:hidden flex-shrink-0 flex items-center gap-2">
-//            {/* Mobile Search Icon could go here if needed */}
-//           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white p-1 rounded hover:bg-blue-700">
-//             <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//               {isMobileMenuOpen ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/> : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"/>}
-//             </svg>
-//           </button>
+//         {/* --- ICONS AREA (Cart + Mobile Menu) --- */}
+//         <div className="flex items-center gap-5">
+          
+//           {/* CART ICON */}
+//           <Link to="/cart" className="relative group text-white hover:text-yellow-400 transition-colors">
+//             <div className="p-1">
+//               {/* Using the new Solid Cart Icon */}
+//               <CartIcon className="h-7 w-7" />
+              
+//               {cartCount > 0 && (
+//                 <span className="absolute -top-1 -right-2 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border border-blue-800 shadow-sm min-w-[20px] text-center">
+//                   {cartCount}
+//                 </span>
+//               )}
+//             </div>
+//           </Link>
+
+//           {/* Mobile Menu Toggle */}
+//           <div className="md:hidden flex-shrink-0">
+//             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white p-1 rounded hover:bg-blue-700">
+//               <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                  {isMobileMenuOpen ? (
+//                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
+//                  ) : (
+//                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"/>
+//                  )}
+//               </svg>
+//             </button>
+//           </div>
 //         </div>
 //       </div>
 
 //       {/* Desktop Navigation - Slim Strip */}
 //       <div className="hidden md:block border-t border-blue-700 bg-blue-900">
 //         <nav className="container mx-auto">
-//           <ul className="flex justify-center space-x-8 text-sm font-medium text-white py-1.5">
+//           <ul className="flex justify-center space-x-8 text-sm font-medium text-white py-2">
 //             <li><Link to="/" className="hover:text-yellow-400 transition-colors">HOME</Link></li>
             
 //             <li className="relative group" ref={brandsDropdownRef}>
-//               <button onClick={() => setIsBrandsDropdownOpen(!isBrandsDropdownOpen)} className="flex items-center hover:text-yellow-400 transition-colors focus:outline-none">
-//                 BRANDS <svg className={`w-3 h-3 ml-1 transition-transform ${isBrandsDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
+//               <button onClick={() => setIsBrandsDropdownOpen(!isBrandsDropdownOpen)} className="flex items-center hover:text-yellow-400 transition-colors focus:outline-none gap-1">
+//                 BRANDS <svg className={`w-3 h-3 transition-transform ${isBrandsDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
 //               </button>
 //               {isBrandsDropdownOpen && (
 //                 <div className="absolute top-full left-0 mt-1 w-48 bg-white text-gray-800 rounded shadow-lg z-50 border border-gray-200">
@@ -195,8 +236,8 @@
 //             </li>
 
 //             <li className="relative" ref={productsDropdownRef}>
-//               <button onClick={() => setIsProductsDropdownOpen(!isProductsDropdownOpen)} className="flex items-center hover:text-yellow-400 transition-colors focus:outline-none">
-//                 PRODUCTS <svg className={`w-3 h-3 ml-1 transition-transform ${isProductsDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
+//               <button onClick={() => setIsProductsDropdownOpen(!isProductsDropdownOpen)} className="flex items-center hover:text-yellow-400 transition-colors focus:outline-none gap-1">
+//                 PRODUCTS <svg className={`w-3 h-3 transition-transform ${isProductsDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
 //               </button>
 //               {isProductsDropdownOpen && (
 //                 <div className="absolute top-full left-0 mt-1 w-48 bg-white text-gray-800 rounded shadow-lg z-50 border border-gray-200">
@@ -219,7 +260,9 @@
 //         <div className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-50" onClick={() => setIsMobileMenuOpen(false)}>
 //           <div className="fixed top-0 right-0 w-64 h-full bg-white shadow-xl p-5 overflow-y-auto" onClick={e => e.stopPropagation()}>
 //             <div className="flex justify-end mb-4">
-//               <button onClick={() => setIsMobileMenuOpen(false)} className="text-gray-500 hover:bg-gray-100 p-1 rounded-full"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+//               <button onClick={() => setIsMobileMenuOpen(false)} className="text-gray-500 hover:bg-gray-100 p-1 rounded-full">
+//                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
+//               </button>
 //             </div>
             
 //             {/* Mobile Search */}
@@ -235,11 +278,15 @@
 //             <nav className="space-y-4 text-gray-800">
 //               <Link to="/" className="block font-medium" onClick={() => setIsMobileMenuOpen(false)}>HOME</Link>
 //               <div>
-//                 <button onClick={() => setIsMobileBrandsOpen(!isMobileBrandsOpen)} className="flex justify-between w-full font-medium">BRANDS <svg className={`w-4 h-4 transition-transform ${isMobileBrandsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg></button>
+//                 <button onClick={() => setIsMobileBrandsOpen(!isMobileBrandsOpen)} className="flex justify-between w-full font-medium items-center">
+//                    BRANDS <svg className={`w-4 h-4 transition-transform ${isMobileBrandsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
+//                 </button>
 //                 {isMobileBrandsOpen && <div className="ml-4 mt-2 space-y-2 text-sm text-gray-600"><button onClick={() => handleBrandClick('all')} className="block w-full text-left font-bold">All Brands</button>{brandNames.map(b => <button key={b} onClick={() => handleBrandClick(b)} className="block w-full text-left capitalize">{b}</button>)}</div>}
 //               </div>
 //               <div>
-//                 <button onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)} className="flex justify-between w-full font-medium">PRODUCTS <svg className={`w-4 h-4 transition-transform ${isMobileProductsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg></button>
+//                 <button onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)} className="flex justify-between w-full font-medium items-center">
+//                    PRODUCTS <svg className={`w-4 h-4 transition-transform ${isMobileProductsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
+//                 </button>
 //                 {isMobileProductsOpen && <div className="ml-4 mt-2 space-y-2 text-sm text-gray-600"><Link to="/products#office" className="block" onClick={() => setIsMobileMenuOpen(false)}>Office</Link><Link to="/products#stationary" className="block" onClick={() => setIsMobileMenuOpen(false)}>Stationary</Link><Link to="/products#toys" className="block" onClick={() => setIsMobileMenuOpen(false)}>Toys</Link><Link to="/products#decoration" className="block" onClick={() => setIsMobileMenuOpen(false)}>Decoration</Link></div>}
 //               </div>
 //               <Link to="/AboutUs" className="block font-medium" onClick={() => setIsMobileMenuOpen(false)}>ABOUT US</Link>
@@ -255,6 +302,8 @@
 // export default Header;
 
 
+
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext'; 
@@ -265,25 +314,20 @@ const CartIcon = ({ className }) => (
     xmlns="http://www.w3.org/2000/svg" 
     className={className}
     viewBox="0 0 24 24" 
-    fill="currentColor" // Solid fill for better visibility
+    fill="currentColor" 
   >
     <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12 .9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H4.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
   </svg>
 );
 
-// --- 2. CUSTOM LOGO (Recreated "Lotus Book" style) ---
-// This SVG mimics the open book/flower shape from your image
+// --- 2. CUSTOM LOGO ---
 const KundKundLogoIcon = ({ className }) => (
-
   <svg 
-    viewBox="0 0 1000 225" // Wide viewbox to fit Icon + Text side-by-side
+    viewBox="0 0 1000 225" 
     fill="none" 
     xmlns="http://www.w3.org/2000/svg" 
     className={className}
   >
-    {/* PART 1: YOUR PROVIDED ICON PATHS (Scaled and positioned to the left) */}
-    {/* The original SVG was flipped/scaled by Potrace. I have adjusted the transform 
-        to make it sit correctly on the left side. */}
     <g transform="translate(0, 225) scale(0.1, -0.1)" fill="currentColor">
       <path d="M1251 2093 c-12 -31 -63 -115 -113 -187 -115 -163 -142 -226 -136 -315 5 -67 42 -158 93 -226 93 -126 165 -301 165 -404 0 -88 36 -97 39 -9 4 117 40 221 117 340 146 226 168 308 114 433 -17 39 -31 60 -142 221 -30 44 -66 108 -78 142 -13 34 -26 62 -30 62 -4 0 -17 -26 -29 -57z m79 -114 c0 -10 4 -19 9 -19 5 0 14 -13 21 -30 7 -16 17 -27 23 -23 6 3 7 1 3 -5 -6 -11 8 -33 50 -78 12 -13 20 -25 17 -27 -2 -3 7 -17 21 -32 14 -15 23 -32 20 -37 -3 -5 -1 -15 5 -22 18 -22 34 -126 23 -150 -14 -30 -24 -58 -29 -80 -2 -10 -19 -40 -38 -66 -19 -26 -35 -52 -35 -58 0 -6 -11 -23 -25 -38 -13 -14 -22 -30 -19 -35 3 -5 1 -9 -4 -9 -10 0 -65 -114 -67 -141 -4 -30 -15 -41 -31 -28 -7 6 -11 16 -7 22 4 6 0 8 -10 4 -10 -4 -14 -2 -12 6 8 20 -11 72 -24 69 -7 -1 -10 2 -7 7 8 12 -14 62 -24 56 -4 -2 -15 15 -25 40 -10 24 -22 42 -26 40 -4 -3 -10 2 -13 11 -4 10 -2 13 7 8 6 -4 -1 5 -16 21 -16 17 -26 36 -24 46 4 13 0 16 -12 12 -9 -4 -13 -2 -8 2 4 5 0 19 -8 31 -8 12 -17 41 -21 63 -4 22 -9 39 -13 37 -3 -2 -6 16 -6 39 0 24 2 42 4 39 5 -5 36 77 46 120 6 25 25 47 36 40 5 -3 6 3 2 13 -3 10 -2 15 2 11 11 -11 38 29 29 44 -4 6 -3 9 2 6 5 -3 20 8 34 25 14 17 18 27 10 22 -8 -5 -3 7 13 27 15 20 27 42 27 48 0 6 4 9 9 6 5 -4 12 7 16 23 l6 30 35 -35 c19 -20 34 -44 34 -55z"/>
       <path d="M1291 1835 c0 -5 9 -26 19 -45 76 -138 85 -164 85 -235 0 -64 -4 -78 -50 -165 -27 -52 -51 -97 -53 -100 -7 -11 -36 19 -63 65 -57 96 -63 116 -64 200 0 78 1 83 53 178 52 96 56 119 13 74 -41 -45 -89 -152 -98 -222 -2 -21 -5 -42 -6 -45 -3 -15 17 -87 33 -118 11 -19 17 -39 15 -43 -3 -4 2 -9 10 -13 8 -3 15 -12 15 -21 0 -8 4 -15 9 -15 5 0 11 -9 14 -19 3 -13 17 -22 40 -26 37 -7 61 0 52 16 -4 5 2 6 11 2 14 -5 16 -3 11 11 -5 13 -3 17 6 13 9 -3 13 3 13 17 -1 11 4 20 11 19 7 -2 10 4 7 12 -4 8 -1 15 6 15 7 0 9 8 4 23 -3 12 -3 19 1 15 10 -10 38 29 30 41 -3 5 0 29 6 53 10 38 9 54 -11 121 -13 42 -33 89 -46 102 -13 14 -18 25 -11 25 7 0 4 7 -7 15 -10 7 -15 18 -12 24 4 5 2 12 -4 16 -5 3 -10 1 -10 -6 0 -7 -7 -4 -15 7 -8 10 -14 15 -14 9z"/>
@@ -293,29 +337,20 @@ const KundKundLogoIcon = ({ className }) => (
       <path d="M1920 1005 c-180 -37 -348 -126 -494 -265 -70 -67 -145 -160 -129 -160 5 0 29 20 53 45 90 92 282 200 450 253 126 40 257 61 418 69 72 3 132 9 132 12 0 14 -58 40 -114 50 -78 14 -235 12 -316 -4z m190 -24 c0 -4 -30 -7 -67 -5 -53 2 -61 1 -38 -6 l30 -9 -32 3 c-18 1 -34 -1 -35 -6 -2 -5 -23 -11 -48 -14 -25 -2 -50 -6 -56 -8 -6 -2 -17 0 -25 5 -16 10 -5 12 44 9 15 -1 27 4 27 10 0 7 6 10 13 7 7 -3 24 1 38 9 26 15 149 19 149 5z m-290 -50 c0 -5 -14 -12 -30 -16 -19 -4 -28 -11 -24 -18 5 -8 2 -8 -7 1 -17 16 -29 15 -29 -1 0 -8 -6 -14 -12 -15 -7 0 -24 -3 -38 -6 -14 -4 -19 -3 -11 0 8 4 29 17 48 30 19 13 41 20 49 17 8 -3 14 0 14 6 0 6 9 11 20 11 11 0 20 -4 20 -9z"/>
     </g>
 
-    {/* PART 2: THE TEXT (Placed to the Right) */}
     <g transform="translate(280, 100)" fill="currentColor">
-      {/* Title: KUNDKUND */}
       <text x="0" y="20" fontFamily="'Times New Roman', serif" fontSize="90" fontWeight="bold" letterSpacing="2">
         KUNDKUND
       </text>
       
-      {/* Subtitle: STATIONERS */}
       <text x="4" y="70" fontFamily="sans-serif" fontSize="28" letterSpacing="14" opacity="0.9">
         STATIONERS
       </text>
       
-      {/* Footer: RELIABLE SINCE 2017 */}
       <g transform="translate(5, 105)">
-        {/* Left Line */}
         <line x1="0" y1="-5" x2="40" y2="-5" stroke="currentColor" strokeWidth="3" opacity="0.7" />
-        
-        {/* Text */}
         <text x="50" y="0" fontFamily="sans-serif" fontSize="16" fontWeight="bold" letterSpacing="2">
           RELIABLE SINCE 2017
         </text>
-        
-        {/* Right Line */}
         <line x1="270" y1="-5" x2="310" y2="-5" stroke="currentColor" strokeWidth="3" opacity="0.7" />
       </g>
     </g>
@@ -343,7 +378,6 @@ function Header() {
   const navigate = useNavigate();
   const brandNames = ["doms", "kores","pedilite", "montex", "flair", "munix", "cello", "natraj", "saino", "pierre"];
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (productsDropdownRef.current && !productsDropdownRef.current.contains(event.target)) setIsProductsDropdownOpen(false);
@@ -397,13 +431,14 @@ function Header() {
   return (
     <header className="bg-blue-800 shadow-lg font-inter sticky top-0 z-50">
       {/* Top Bar */}
-      <div className="container mx-auto px-4 py-2 flex items-center justify-between gap-4">
+      {/* ✅ FIX 1: Reduced gap for mobile (gap-2) */}
+      <div className="container mx-auto px-4 py-2 flex items-center justify-between gap-2 md:gap-4">
         
         {/* LOGO SECTION */}
         <div className="flex-shrink-0">
             <Link to="/" className="flex items-center text-white hover:opacity-90 transition-opacity">
-             {/* h-14 controls the Slim height. The SVG scales to fill this height. */}
-             <KundKundLogoIcon className="h-14 w-auto" />
+             {/* ✅ FIX 2: Reduced logo height for mobile (h-10) */}
+             <KundKundLogoIcon className="h-10 md:h-14 w-auto" />
           </Link>
          </div>
 
@@ -438,7 +473,8 @@ function Header() {
         </div>
 
         {/* --- ICONS AREA (Cart + Mobile Menu) --- */}
-        <div className="flex items-center gap-5">
+        {/* ✅ FIX 3: Reduced gap for icons area on mobile (gap-3) */}
+        <div className="flex items-center gap-3 md:gap-5">
           
           {/* CART ICON */}
           <Link to="/cart" className="relative group text-white hover:text-yellow-400 transition-colors">
@@ -458,11 +494,11 @@ function Header() {
           <div className="md:hidden flex-shrink-0">
             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white p-1 rounded hover:bg-blue-700">
               <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                 {isMobileMenuOpen ? (
+                  {isMobileMenuOpen ? (
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
-                 ) : (
+                  ) : (
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"/>
-                 )}
+                  )}
               </svg>
             </button>
           </div>
