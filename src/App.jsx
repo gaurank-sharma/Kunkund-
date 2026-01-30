@@ -59,8 +59,6 @@
 // }
 
 
-
-
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
@@ -77,35 +75,34 @@ import FloatingSupport from "./components/FloatingSupport";
 import LoadingAnimation from './components/LoadingAnimation';
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  // ✅ FIX 1: Use lazy initialization to check session storage immediately.
+  // This prevents the loading state from being 'true' for a split second on refresh.
+  const [isLoading, setIsLoading] = useState(() => {
+    return !sessionStorage.getItem("appLoaded");
+  });
 
   useEffect(() => {
-    // Check if we already loaded this session
-    const hasLoaded = sessionStorage.getItem("appLoaded");
-    
-    if (hasLoaded) {
-      setIsLoading(false);
-    } else {
+    if (isLoading) {
       const timer = setTimeout(() => {
         setIsLoading(false);
         sessionStorage.setItem("appLoaded", "true");
       }, 3500); 
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [isLoading]);
 
   return (
     <Router>
       <CartProvider>
         <div className="font-sans antialiased text-gray-800 bg-gray-50 min-h-screen flex flex-col relative w-full overflow-x-hidden">
           
-          {/* LOGIC: If loading, show ONLY animation. */}
+          {/* LOGIC: Mutually Exclusive Rendering */}
           {isLoading ? (
+            // State A: Loading
             <LoadingAnimation />
           ) : (
-            /* If NOT loading, show the entire website */
+            // State B: Website (FloatingSupport is ONLY here)
             <>
-              {/* ✅ MOVED INSIDE: Now it only shows after animation is done */}
               <FloatingSupport />
               
               <Header />
@@ -129,6 +126,9 @@ export default function App() {
           
         </div>
       </CartProvider>
+    </Router>
+  );
+}
     </Router>
   );
 }
