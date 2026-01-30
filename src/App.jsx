@@ -61,7 +61,6 @@
 
 
 
-
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
@@ -78,9 +77,8 @@ import FloatingSupport from "./components/FloatingSupport";
 import LoadingAnimation from './components/LoadingAnimation';
 
 export default function App() {
-  // 1. Initialize state based on Session Storage
-  // If 'appLoaded' exists in storage, isLoading starts as false.
   const [isLoading, setIsLoading] = useState(() => {
+    // Check session storage to see if we've already loaded this session
     return !sessionStorage.getItem("appLoaded");
   });
 
@@ -88,31 +86,28 @@ export default function App() {
     if (isLoading) {
       const timer = setTimeout(() => {
         setIsLoading(false);
-        // 2. Set the flag so it doesn't run again on refresh
         sessionStorage.setItem("appLoaded", "true");
-      }, 3500);
-      
+      }, 3500); 
       return () => clearTimeout(timer);
     }
   }, [isLoading]);
 
-  // 3. "No Header and all" logic
-  // If loading, we return ONLY the animation. The App (Header/Footer) is not rendered yet.
   if (isLoading) {
     return <LoadingAnimation />;
   }
 
   return (
-    <CartProvider>
-      <Router>
-        {/* 4. 'overflow-x-hidden' prevents the mobile x-axis expansion issue */}
-        <div className="font-sans antialiased text-gray-800 bg-gray-50 min-h-screen flex flex-col relative overflow-x-hidden w-full">
+    // ✅ FIX: Router MUST wrap CartProvider
+    <Router>
+      <CartProvider>
+        
+        {/* Main Wrapper with overflow-x-hidden to stop horizontal scrolling */}
+        <div className="font-sans antialiased text-gray-800 bg-gray-50 min-h-screen flex flex-col relative w-full overflow-x-hidden">
           
           <FloatingSupport />
           
           <Header />
           
-          {/* Main content area */}
           <div className="flex-grow w-full">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -129,7 +124,8 @@ export default function App() {
           
           <Footer />
         </div>
-      </Router>
-    </CartProvider>
+
+      </CartProvider>
+    </Router>
   );
 }
