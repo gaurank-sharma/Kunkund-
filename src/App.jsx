@@ -61,7 +61,6 @@
 
 
 
-
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
@@ -78,34 +77,37 @@ import FloatingSupport from "./components/FloatingSupport";
 import LoadingAnimation from './components/LoadingAnimation';
 
 export default function App() {
-  // Logic to load animation only once per session
-  const [isLoading, setIsLoading] = useState(() => !sessionStorage.getItem("appLoaded"));
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (isLoading) {
+    // Check if we already loaded this session
+    const hasLoaded = sessionStorage.getItem("appLoaded");
+    
+    if (hasLoaded) {
+      setIsLoading(false);
+    } else {
       const timer = setTimeout(() => {
         setIsLoading(false);
         sessionStorage.setItem("appLoaded", "true");
-      }, 3500);
+      }, 3500); 
       return () => clearTimeout(timer);
     }
-  }, [isLoading]);
+  }, []);
 
   return (
-    // ✅ FIX 1: Router MUST be the outside wrapper to prevent the crash
     <Router>
       <CartProvider>
-        
-        {/* ✅ FIX 2: overflow-x-hidden stops the side-scroll on mobile */}
         <div className="font-sans antialiased text-gray-800 bg-gray-50 min-h-screen flex flex-col relative w-full overflow-x-hidden">
           
-          <FloatingSupport />
-          
-          {/* ✅ FIX 3: If loading, show ONLY animation. No Header/Footer. */}
+          {/* LOGIC: If loading, show ONLY animation. */}
           {isLoading ? (
             <LoadingAnimation />
           ) : (
+            /* If NOT loading, show the entire website */
             <>
+              {/* ✅ MOVED INSIDE: Now it only shows after animation is done */}
+              <FloatingSupport />
+              
               <Header />
               
               <div className="flex-grow w-full">
@@ -130,5 +132,4 @@ export default function App() {
     </Router>
   );
 }
-
 
