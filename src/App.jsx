@@ -91,14 +91,14 @@ import FloatingSupport from "./components/FloatingSupport";
 import LoadingAnimation from './components/LoadingAnimation';
 
 export default function App() {
-  // ✅ FIX 1: Use lazy initialization to check session storage immediately.
+
   const [isLoading, setIsLoading] = useState(() => {
     return !sessionStorage.getItem("appLoaded");
   });
 
   useEffect(() => {
     if (isLoading) {
-      // ✅ CHANGED: Set to 7000ms (7 seconds)
+
       const timer = setTimeout(() => {
         setIsLoading(false);
         sessionStorage.setItem("appLoaded", "true");
